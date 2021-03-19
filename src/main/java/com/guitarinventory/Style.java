@@ -5,8 +5,10 @@ public enum Style {
 
     public String toString() {
         switch (this) {
-            case A: return "A";
-            case F: return "F";
+            case A:
+                return "A";
+            case F:
+                return "F";
         }
         return null;
     }

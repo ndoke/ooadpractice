@@ -3,10 +3,10 @@ package com.guitarinventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory {
+class Inventory {
     private List<Instrument> inventory;
 
-    public void addInstrument(String serialNumber, double price, InstrumentSpec instrumentSpec) {
+    void addInstrument(String serialNumber, double price, InstrumentSpec instrumentSpec) {
         if (instrumentSpec instanceof GuitarSpec) {
             GuitarSpec guitarSpec = (GuitarSpec) instrumentSpec;
             Guitar guitar = new Guitar(serialNumber, price, guitarSpec);
@@ -21,10 +21,17 @@ public class Inventory {
                 inventory = new ArrayList<>();
             }
             inventory.add(mandolin);
+        } else if (instrumentSpec instanceof SitarSpec) {
+            SitarSpec sitarSpec = (SitarSpec) instrumentSpec;
+            Sitar sitar = new Sitar(serialNumber, price, sitarSpec);
+            if (inventory == null) {
+                inventory = new ArrayList<>();
+            }
+            inventory.add(sitar);
         }
     }
 
-    public Instrument get(String serialNumber) {
+    Instrument get(String serialNumber) {
         for (Instrument instrument : inventory) {
             if (instrument.getSerialNumber().equalsIgnoreCase(serialNumber)) {
                 return instrument;
@@ -33,7 +40,7 @@ public class Inventory {
         return null;
     }
 
-    public List<Guitar> search(GuitarSpec guitarSpec) {
+    List<Guitar> search(GuitarSpec guitarSpec) {
         List<Guitar> guitarsMatchingSerachCriteria = new ArrayList<>();
         for (Instrument i : inventory) {
             if (i instanceof Guitar && guitarFound((Guitar) i, guitarSpec)) {
@@ -53,6 +60,16 @@ public class Inventory {
         return mandolinsMatchingSerachCriteria;
     }
 
+    public List<Sitar> search(SitarSpec sitarSpec) {
+        List<Sitar> sitarsMatchingSerachCriteria = new ArrayList<>();
+        for (Instrument i : inventory) {
+            if (i instanceof Sitar && sitarFound((Sitar) i, sitarSpec)) {
+                sitarsMatchingSerachCriteria.add((Sitar) i);
+            }
+        }
+        return sitarsMatchingSerachCriteria;
+    }
+
     private boolean mandolinFound(Mandolin availableMandolin, MandolinSpec requestedMandolinSpec) {
         MandolinSpec availableMandolinSpec = availableMandolin.getInstrumentSpec();
         return availableMandolinSpec.getBackWood() == requestedMandolinSpec.getBackWood() ||
@@ -70,5 +87,14 @@ public class Inventory {
             availableGuitarSpec.getModel().equalsIgnoreCase(requestedSpec.getModel()) ||
             availableGuitarSpec.getTopWood() == requestedSpec.getTopWood() ||
             availableGuitarSpec.getType() == requestedSpec.getType();
+    }
+
+    private boolean sitarFound(Sitar availableSitar, SitarSpec requestedSpec) {
+        SitarSpec availableSitarSpec = availableSitar.getInstrumentSpec();
+        return availableSitarSpec.getBackWood() == requestedSpec.getBackWood() ||
+            availableSitarSpec.getBuilder() == requestedSpec.getBuilder() ||
+            availableSitarSpec.getModel().equalsIgnoreCase(requestedSpec.getModel()) ||
+            availableSitarSpec.getTopWood() == requestedSpec.getTopWood() ||
+            availableSitarSpec.getType() == requestedSpec.getType();
     }
 }

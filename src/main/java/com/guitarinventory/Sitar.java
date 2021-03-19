@@ -1,8 +1,8 @@
 package com.guitarinventory;
 
-public class Mandolin extends Instrument {
-    Mandolin(String serialNumber, double price, MandolinSpec mandolinSpec) {
-        super(serialNumber, price, mandolinSpec);
+public class Sitar extends Instrument {
+    Sitar(String serialNumber, double price, InstrumentSpec instrumentSpec) {
+        super(serialNumber, price, instrumentSpec);
     }
 
     public String getSerialNumber() {
@@ -13,8 +13,8 @@ public class Mandolin extends Instrument {
         return price;
     }
 
-    public MandolinSpec getInstrumentSpec() {
-        return (MandolinSpec) instrumentSpec;
+    public SitarSpec getInstrumentSpec() {
+        return (SitarSpec) instrumentSpec;
     }
 
     @Override
