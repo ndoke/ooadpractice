@@ -7,28 +7,11 @@ class Inventory {
     private List<Instrument> inventory;
 
     void addInstrument(String serialNumber, double price, InstrumentSpec instrumentSpec) {
-        if (instrumentSpec instanceof GuitarSpec) {
-            GuitarSpec guitarSpec = (GuitarSpec) instrumentSpec;
-            Guitar guitar = new Guitar(serialNumber, price, guitarSpec);
-            if (inventory == null) {
-                inventory = new ArrayList<>();
-            }
-            inventory.add(guitar);
-        } else if (instrumentSpec instanceof MandolinSpec) {
-            MandolinSpec mandolinSpec = (MandolinSpec) instrumentSpec;
-            Mandolin mandolin = new Mandolin(serialNumber, price, mandolinSpec);
-            if (inventory == null) {
-                inventory = new ArrayList<>();
-            }
-            inventory.add(mandolin);
-        } else if (instrumentSpec instanceof SitarSpec) {
-            SitarSpec sitarSpec = (SitarSpec) instrumentSpec;
-            Sitar sitar = new Sitar(serialNumber, price, sitarSpec);
-            if (inventory == null) {
-                inventory = new ArrayList<>();
-            }
-            inventory.add(sitar);
+        Instrument guitar = new Instrument(serialNumber, price, instrumentSpec);
+        if (inventory == null) {
+            inventory = new ArrayList<>();
         }
+        inventory.add(guitar);
     }
 
     Instrument get(String serialNumber) {
@@ -40,61 +23,18 @@ class Inventory {
         return null;
     }
 
-    List<Guitar> search(GuitarSpec guitarSpec) {
-        List<Guitar> guitarsMatchingSerachCriteria = new ArrayList<>();
+    List<Instrument> search(InstrumentSpec instrumentSpec) {
+        List<Instrument> instrumentsMatchingSerachCriteria = new ArrayList<>();
         for (Instrument i : inventory) {
-            if (i instanceof Guitar && guitarFound((Guitar) i, guitarSpec)) {
-                guitarsMatchingSerachCriteria.add((Guitar) i);
+            if (instrumentFound(i, instrumentSpec)) {
+                instrumentsMatchingSerachCriteria.add(i);
             }
         }
-        return guitarsMatchingSerachCriteria;
+
+        return instrumentsMatchingSerachCriteria;
     }
 
-    List<Mandolin> search(MandolinSpec mandolinSpec) {
-        List<Mandolin> mandolinsMatchingSerachCriteria = new ArrayList<>();
-        for (Instrument i : inventory) {
-            if (i instanceof Mandolin && mandolinFound((Mandolin) i, mandolinSpec)) {
-                mandolinsMatchingSerachCriteria.add((Mandolin) i);
-            }
-        }
-        return mandolinsMatchingSerachCriteria;
-    }
-
-    List<Sitar> search(SitarSpec sitarSpec) {
-        List<Sitar> sitarsMatchingSerachCriteria = new ArrayList<>();
-        for (Instrument i : inventory) {
-            if (i instanceof Sitar && sitarFound((Sitar) i, sitarSpec)) {
-                sitarsMatchingSerachCriteria.add((Sitar) i);
-            }
-        }
-        return sitarsMatchingSerachCriteria;
-    }
-
-    private boolean mandolinFound(Mandolin availableMandolin, MandolinSpec requestedMandolinSpec) {
-        MandolinSpec availableMandolinSpec = availableMandolin.getInstrumentSpec();
-        return availableMandolinSpec.getBackWood() == requestedMandolinSpec.getBackWood() ||
-            availableMandolinSpec.getBuilder() == requestedMandolinSpec.getBuilder() ||
-            availableMandolinSpec.getModel().equalsIgnoreCase(requestedMandolinSpec.getModel()) ||
-            availableMandolinSpec.getTopWood() == requestedMandolinSpec.getTopWood() ||
-            availableMandolinSpec.getStyle() == requestedMandolinSpec.getStyle() ||
-            availableMandolinSpec.getType() == requestedMandolinSpec.getType();
-    }
-
-    private boolean guitarFound(Guitar availableGuitar, GuitarSpec requestedSpec) {
-        GuitarSpec availableGuitarSpec = availableGuitar.getInstrumentSpec();
-        return availableGuitarSpec.getBackWood() == requestedSpec.getBackWood() ||
-            availableGuitarSpec.getBuilder() == requestedSpec.getBuilder() ||
-            availableGuitarSpec.getModel().equalsIgnoreCase(requestedSpec.getModel()) ||
-            availableGuitarSpec.getTopWood() == requestedSpec.getTopWood() ||
-            availableGuitarSpec.getType() == requestedSpec.getType();
-    }
-
-    private boolean sitarFound(Sitar availableSitar, SitarSpec requestedSpec) {
-        SitarSpec availableSitarSpec = availableSitar.getInstrumentSpec();
-        return availableSitarSpec.getBackWood() == requestedSpec.getBackWood() ||
-            availableSitarSpec.getBuilder() == requestedSpec.getBuilder() ||
-            availableSitarSpec.getModel().equalsIgnoreCase(requestedSpec.getModel()) ||
-            availableSitarSpec.getTopWood() == requestedSpec.getTopWood() ||
-            availableSitarSpec.getType() == requestedSpec.getType();
+    private boolean instrumentFound(Instrument i, InstrumentSpec instrumentSpec) {
+        return i.getInstrumentSpec().matches(instrumentSpec);
     }
 }

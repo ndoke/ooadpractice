@@ -1,57 +1,39 @@
 package com.guitarinventory;
 
-abstract public class InstrumentSpec {
-    private Builder builder;
-    private String model;
-    private Type type;
-    private Wood backWood;
-    private Wood topWood;
+import java.util.Map;
 
-    InstrumentSpec(Builder builder, String model, Type type, Wood backWood, Wood topWood) {
-        this.builder = builder;
-        this.model = model;
-        this.type = type;
-        this.backWood = backWood;
-        this.topWood = topWood;
+public class InstrumentSpec {
+    private Map<String, Object> properties;
+
+    InstrumentSpec(Map<String, Object> properties) {
+        this.properties = properties;
     }
 
-    Builder getBuilder() {
-        return builder;
+    public Object getProperty(Object key) {
+        return properties.get(key);
     }
 
-    String getModel() {
-        return model;
+    public Map<String, Object> getProperties() {
+        return properties;
     }
 
-    Type getType() {
-        return type;
-    }
-
-    Wood getBackWood() {
-        return backWood;
-    }
-
-    Wood getTopWood() {
-        return topWood;
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
     }
 
     public boolean matches(InstrumentSpec otherSpec) {
-        if (builder != otherSpec.builder) {
-            return false;
-        }
-        if (model != null && !model.equals("") && !model.equals(otherSpec.model)) {
-            return false;
-        }
-        if (type != otherSpec.type) {
-            return false;
-        }
-        if (backWood != otherSpec.backWood) {
-            return false;
-        }
-        if (topWood != otherSpec.topWood) {
+        if (!properties.get("instrumentType").equals(otherSpec.getProperties().get("instrumentType"))) {
             return false;
         }
 
-        return true;
+        Map<String, Object> props = otherSpec.getProperties();
+        for (String key : props.keySet()) {
+            if (!key.equalsIgnoreCase("instrumentType") &&
+                properties.containsKey(key) && properties.get(key).equals(props.get(key))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

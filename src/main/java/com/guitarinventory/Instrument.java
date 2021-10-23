@@ -1,6 +1,6 @@
 package com.guitarinventory;
 
-abstract public class Instrument {
+public class Instrument {
     String serialNumber;
     double price;
     InstrumentSpec instrumentSpec;
