@@ -10,7 +10,7 @@ public class InventoryTest {
 
     @Test
     public void test() {
-        // Guitar test
+        /** Guitar test */
         inventory.addInstrument("gr_101", 100, new GuitarSpec(Builder.COLLINGS,
             "mod1", Type.ELECTRIC, Wood.BRAZILIAN_ROSEWOOD, Wood.ALDER, 12));
         inventory.addInstrument("gr_102", 225, new GuitarSpec(Builder.FENDER,
@@ -28,7 +28,7 @@ public class InventoryTest {
         Assert.assertEquals(inventory.get("gr_104").getInstrumentSpec().getBackWood(),
             Wood.BRAZILIAN_ROSEWOOD);
 
-        // Mandolin test
+        /** Mandolin test */
         inventory.addInstrument("mn_101", 1000, new MandolinSpec(Builder.FENDER,
             "mod2", Type.ACOUSTIC, Wood.BRAZILIAN_ROSEWOOD, Wood.ALDER, Style.A));
         inventory.addInstrument("mn_102", 2500, new MandolinSpec(Builder.COLLINGS,
@@ -39,7 +39,7 @@ public class InventoryTest {
         List<Mandolin> matchingMandolins = inventory.search(mandolinSpec);
         Assert.assertEquals(matchingMandolins.size(), 1);
 
-        // Sitar test
+        /** Sitar test */
         inventory.addInstrument("mn_101", 1000, new SitarSpec(Builder.FENDER,
             "mod2", Type.ACOUSTIC, Wood.BRAZILIAN_ROSEWOOD, Wood.ALDER, Sound.HIGH));
         inventory.addInstrument("mn_102", 2500, new SitarSpec(Builder.COLLINGS,
