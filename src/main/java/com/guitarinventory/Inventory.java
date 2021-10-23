@@ -50,7 +50,7 @@ class Inventory {
         return guitarsMatchingSerachCriteria;
     }
 
-    public List<Mandolin> search(MandolinSpec mandolinSpec) {
+    List<Mandolin> search(MandolinSpec mandolinSpec) {
         List<Mandolin> mandolinsMatchingSerachCriteria = new ArrayList<>();
         for (Instrument i : inventory) {
             if (i instanceof Mandolin && mandolinFound((Mandolin) i, mandolinSpec)) {
@@ -60,7 +60,7 @@ class Inventory {
         return mandolinsMatchingSerachCriteria;
     }
 
-    public List<Sitar> search(SitarSpec sitarSpec) {
+    List<Sitar> search(SitarSpec sitarSpec) {
         List<Sitar> sitarsMatchingSerachCriteria = new ArrayList<>();
         for (Instrument i : inventory) {
             if (i instanceof Sitar && sitarFound((Sitar) i, sitarSpec)) {
